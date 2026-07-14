@@ -1,0 +1,41 @@
+// Last updated: 14/07/2026, 16:06:38
+class Solution {
+    public int myAtoi(String s) {
+        int i = 0;
+        int n = s.length();
+
+        // Step 1: Skip leading spaces
+        while (i < n && s.charAt(i) == ' ') {
+            i++;
+        }
+
+        // Step 2: Determine sign
+        int sign = 1;
+        if (i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')) {
+            sign = (s.charAt(i) == '-') ? -1 : 1;
+            i++;
+        }
+
+        // Step 3: Read digits
+        long num = 0;
+
+        while (i < n && Character.isDigit(s.charAt(i))) {
+            int digit = s.charAt(i) - '0';
+
+            num = num * 10 + digit;
+
+            // Step 4: Handle overflow
+            if (sign * num > Integer.MAX_VALUE) {
+                return Integer.MAX_VALUE;
+            }
+
+            if (sign * num < Integer.MIN_VALUE) {
+                return Integer.MIN_VALUE;
+            }
+
+            i++;
+        }
+
+        return (int) (sign * num);
+    }
+}
